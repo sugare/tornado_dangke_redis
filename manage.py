@@ -12,7 +12,7 @@ import tornado.httpserver
 import tornado.gen
 import os
 import redis
-from updata1 import downloadMask
+from updata import downloadMask
 
 from tornado.options import define, options
 define("port", default=8888, help="run on the given port", type=int)

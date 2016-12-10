@@ -3,7 +3,7 @@
 # @Time    : 16-12-1 下午7:07
 # @Author  : sugare
 # @Site    : 
-# @File    : updata1.py
+# @File    : updata.py
 # @Software: PyCharm
 import os
 import redis
@@ -103,7 +103,7 @@ def downloadMask():     # 下载成绩单
 
 
 if __name__ == '__main__':
-    #upUsers()
-    #upSurvey()
-    #upQuestionChoice()
-    downloadMask()
+    upUsers()
+    upSurvey()
+    upQuestionChoice()
+    # downloadMask()

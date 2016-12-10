@@ -18,6 +18,7 @@ git clone git@github.com:sugare/tornado_dangke_redis.git
 sudo pip install tornado
 sudo pip install xlrd
 sudo pip install xlwt
+sudo pip install redis
 sudo apt-get install redis-server supervisor nginx
 ```
 #

@@ -9,31 +9,34 @@ redis_version:3.0.6
 #
 #下载软件
 ```
-git clone git@github.com:sugare/tornado_dangke_redis.git
+git clone git://github.com/sugare/tornado_dangke_redis.git
 
 ```
 #
 #安装需要包及库
 ```
-sudo pip install tornado
-sudo pip install xlrd
-sudo pip install xlwt
-sudo pip install redis
-sudo apt-get install redis-server supervisor nginx
+sudp apt-get install python-tornado python-xlrd python-xlwt python-redis
+sudo apt-get install redis-server supervisor nginx 
 ```
 #
 #测试
-1 运行程序
+1 上传数据
+```
+python updata.py
+
+```
+
+2 运行程序
 ```
 python manage.py
 ```
 
-2 开始考试
+3 开始考试
 ```
 http://IP/
 ```
 
-3 查看成绩
+4 查看成绩
 ```
 http://IP/score
 ```

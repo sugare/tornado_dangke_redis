@@ -106,4 +106,3 @@ if __name__ == '__main__':
     upUsers()
     upSurvey()
     upQuestionChoice()
-    # downloadMask()

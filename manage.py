@@ -10,15 +10,15 @@ import os.path
 import tornado.web
 import tornado.httpserver
 import tornado.gen
-import os, sys
+import os,sys
 import redis
-from updata import upUsers, upSurvey, upQuestionChoice
-from updata import downloadMask
+from updata import downloadMask, upUsers, upSurvey, upQuestionChoice
+
 
 from tornado.options import define, options
 define("port", default=8888, help="run on the given port", type=int)
-define("redis_host", default='127.0.0.1', help="redis host")
-define("redis_port", default=6379, help="redis port")
+define("redis_host", default="127.0.0.1", help="redis host")
+define("redis_port", default=6379, help="redis port", type=int)
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -97,8 +97,8 @@ class ExamHandler(BaseHandler):
             Q = random.sample(L,5)
         return map(lambda num: ty+num, Q)
 
-    # @tornado.web.authenticated
-    # @tornado.web.asynchronous
+    @tornado.web.authenticated
+    @tornado.web.asynchronous
     # @tornado.gen.coroutine
     def get(self):
 
@@ -111,8 +111,8 @@ class ExamHandler(BaseHandler):
 
         self.render('exam1.html', user=self.current_user, s_ques=s, m_ques=m, j_ques=j)
 
-    # @tornado.web.authenticated
-    # @tornado.web.asynchronous
+    @tornado.web.authenticated
+    @tornado.web.asynchronous
     # @tornado.gen.coroutine
     def post(self):
         s_mask = 0

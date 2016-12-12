@@ -12,7 +12,7 @@ import xlwt
 
 r = redis.Redis(host='127.0.0.1', port=6379, db=0)
 
-def upUsers():         # 上传用户
+def upUsers(r):         # 上传用户
     data = xlrd.open_workbook(r'static/data/users.xls')
     table = data.sheet_by_index(0)
     nrows = table.nrows
@@ -24,7 +24,7 @@ def upUsers():         # 上传用户
         r.hset(int(table.row_values(i - 1)[0]), 'total', 0)
 
 
-def upQuestionChoice():
+def upQuestionChoice(r):
     data = xlrd.open_workbook(r'static/data/question.xlsx')
     table = data.sheet_by_index(0)
     # nrows = table.nrows
@@ -50,7 +50,7 @@ def upQuestionChoice():
             r.hset('m'+ str(i-60), 'AN', table.row_values(i-1)[5])
 
 
-def upSurvey():
+def upSurvey(r):
     data = xlrd.open_workbook(r'static/data/fujia.xls')
     table = data.sheet_by_index(0)
     for i in range(6, 11):
@@ -62,7 +62,7 @@ def upSurvey():
         r.hset('i' + str(i-5), 'E', 0)
 
 
-def downloadMask():     # 下载成绩单
+def downloadMask(r):     # 下载成绩单
     workbook = xlwt.Workbook()
     sheet1 = workbook.add_sheet('results', cell_overwrite_ok=True)
     sheet2 = workbook.add_sheet('investigation', cell_overwrite_ok=True)
@@ -103,6 +103,6 @@ def downloadMask():     # 下载成绩单
 
 
 if __name__ == '__main__':
-    upUsers()
-    upSurvey()
-    upQuestionChoice()
+    upUsers(r)
+    upSurvey(r)
+    upQuestionChoice(r)

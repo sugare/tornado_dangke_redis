@@ -10,13 +10,14 @@ import os.path
 import tornado.web
 import tornado.httpserver
 import tornado.gen
-import os
+import os, sys
 import redis
+from updata import upUsers, upSurvey, upQuestionChoice
 from updata import downloadMask
 
 from tornado.options import define, options
 define("port", default=8888, help="run on the given port", type=int)
-define("redis_host", default="127.0.0.1", help="redis host")
+define("redis_host", default='127.0.0.1', help="redis host")
 define("redis_port", default=6379, help="redis port")
 
 class Application(tornado.web.Application):
@@ -38,11 +39,17 @@ class Application(tornado.web.Application):
         )
         super(Application, self).__init__(handlers, **settings)
         # Have one global connection to the blog DB across all handlers
-
-        self.db = redis.Redis(
-            host=options.redis_host, port=options.redis_port, db=0
-        )
-
+	try:
+            self.db = redis.Redis(
+                host=sys.argv[1], port=options.redis_port, db=0
+            )
+	except IndexError:
+	    self.db = redis.Redis(
+                host=options.redis_host, port=options.redis_port, db=0
+            )
+	upUsers(self.db)
+	upSurvey(self.db)
+	upQuestionChoice(self.db)
 
 class BaseHandler(tornado.web.RequestHandler):
     @property       # 将db方法变为属性
@@ -158,7 +165,7 @@ class LogoutHandler(BaseHandler):
 
 class ScoreHandler(ExamHandler):
     def get(self, slug=''):
-        downloadMask()
+        downloadMask(self.db)
         if slug:
             s = self.db.hgetall(slug)
             s.pop('user')

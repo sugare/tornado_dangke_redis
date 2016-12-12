@@ -3,11 +3,30 @@ services:
   redis:
     image: "redis:alpine"
 
-  py:
+  py1:
     build: .
+    depends_on:
+      - redis
+  py2:
+    build: .
+    depends_on:
+      - redis
+  py3:
+    build: .
+    depends_on:
+      - redis
+  py4:
+    build: .
+    depends_on:
+      - redis
 
   web:
     build: ./nginx
+    depends_on:
+      - py1
+      - py2
+      - py3
+      - py4
     ports:
       - "80:80"
     volumes:
